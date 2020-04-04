@@ -39,9 +39,15 @@ ls-pro -h 帮助文档
 
 ### 备注
 
-如何加入到系统命令中？？
+- 如何加入到系统命令中？？
+    
+    ```
+    # ls-pro
+    export PATH="/Users/birjemin/Developer/Go/src/ls-pro/:$PATH"
+    ```
 
-```
-# ls-pro
-export PATH="/Users/birjemin/Developer/Go/src/ls-pro/:$PATH"
-```
+- 新需求
+
+    ```
+    暂时无
+    ```
