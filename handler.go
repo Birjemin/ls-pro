@@ -3,6 +3,7 @@ package main
 import (
     "fmt"
     "os"
+    "sync"
 )
 
 type IService interface {
@@ -68,22 +69,40 @@ Usage: ls-pro -i direction description
 
 func (srv *service) GetAll() {
 
-    // find list
-    kv := srv.kvList()
-    // find dir
-    dirs, err := ListDir(srv.currDir)
+    var wg sync.WaitGroup
 
-    if err != nil {
+    kvChan, dirChan := make(chan map[string]string), make(chan []string)
+
+    wg.Add(2)
+    // find list
+    go func() {
+        list := srv.kvList()
+        wg.Done()
+        kvChan <- list
+    }()
+
+    // find dir
+    go func() {
+        dirs, _ := ListDir(srv.currDir)
+        wg.Done()
+        dirChan <- dirs
+    }()
+
+    wg.Wait()
+
+    kv, dirs := <-kvChan, <-dirChan
+
+    if dirs == nil {
         _, _ = fmt.Fprintf(os.Stderr, `There are no directory
 `)
         return
     }
+
     for _, dir := range dirs {
         if a, ok := kv[dir]; ok {
             _, _ = fmt.Fprintf(os.Stderr, "%-35s%s%s%s\n", dir, string(colorGreen), a, string(colorReset))
         } else {
             _, _ = fmt.Fprintf(os.Stderr, "%s\n", dir)
-
         }
     }
 
