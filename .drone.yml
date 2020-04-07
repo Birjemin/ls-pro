@@ -1,0 +1,11 @@
+kind: pipeline
+name: default
+
+steps:
+  - name: build
+    image: golang:1.13-alpine
+    commands:
+      - mkdir build
+      - env GOARCH=arm go build -o build/ls-pro-arm .
+      - env GOARCH=arm64 go build -o build/ls-pro-arm64 .
+      - env GOARCH=amd64 go build -o build/ls-pro-amd64 .
