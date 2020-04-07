@@ -1,5 +1,5 @@
 kind: pipeline
-name: default
+name: ls-pro
 
 steps:
   - name: build
@@ -9,3 +9,13 @@ steps:
       - env GOARCH=arm go build -o build/ls-pro-arm .
       - env GOARCH=arm64 go build -o build/ls-pro-arm64 .
       - env GOARCH=amd64 go build -o build/ls-pro-amd64 .
+
+  - name: publish
+    image: plugins/github-release
+    settings:
+      api_key:
+        from_secret: {{ ACCESS_TOKEN }}
+      files: build/*
+      title: Release ${DRONE_TAG}
+    when:
+      event: tag
