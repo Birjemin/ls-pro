@@ -2,7 +2,6 @@ package main
 
 import (
     "database/sql"
-    "fmt"
     _ "github.com/mattn/go-sqlite3"
 )
 
@@ -18,8 +17,8 @@ type LsRepository struct {
 }
 
 func (l *LsRepository) GetAll(ls Ls) ([]Ls, error) {
-    lsSql := fmt.Sprintf("select * from ls where id ='%s'", ls.Id)
-    rows, err := l.db.Query(lsSql)
+    lsSql := "SELECT * FROM LS WHERE ID ='?'"
+    rows, err := l.db.Query(lsSql, ls.Id)
     if err != nil {
         return nil, err
     }
@@ -34,7 +33,7 @@ func (l *LsRepository) GetAll(ls Ls) ([]Ls, error) {
 }
 
 func (l *LsRepository) Insert(ls Ls) error {
-    return l.call(`INSERT OR REPLACE INTO LS(ID,NAME, DESC) VALUES(?, ?,?)`, ls.Id, ls.Name, ls.Desc)
+    return l.call(`INSERT OR REPLACE INTO LS(ID,NAME,DESC) VALUES(?,?,?)`, ls.Id, ls.Name, ls.Desc)
 }
 
 func (l *LsRepository) Update(ls Ls) error {

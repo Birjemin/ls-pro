@@ -58,7 +58,7 @@ Usage: ls-pro -d direction
 
     if err != nil {
         _, _ = fmt.Fprintf(os.Stderr, `invalid params
-Usage: ls-pro -i direction description
+Usage: ls-pro -d direction
 `)
         return
     }
