@@ -12,7 +12,7 @@ type LsRepository struct {
 
 // GetAll get all
 func (l *LsRepository) GetAll(ls Ls) ([]Ls, error) {
-    lsSQL := "SELECT * FROM LS WHERE ID ='?'"
+    lsSQL := "SELECT * FROM LS WHERE ID =?"
     rows, err := l.db.Query(lsSQL, ls.ID)
     if err != nil {
         return nil, err

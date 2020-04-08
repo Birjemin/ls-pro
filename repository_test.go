@@ -19,7 +19,7 @@ func TestInsert(t *testing.T) {
 
     mock.ExpectPrepare(regexp.QuoteMeta("INSERT OR REPLACE INTO LS(ID,NAME,DESC)")).
         ExpectExec().
-        WithArgs(ls.Id, ls.Name, ls.Desc).
+        WithArgs(ls.ID, ls.Name, ls.Desc).
         WillReturnResult(sqlmock.NewResult(1, 1))
 
     conn := &LsRepository{db: db}
@@ -38,7 +38,7 @@ func TestQuery(t *testing.T) {
     defer db.Close()
     columns := []string{"ID", "NAME", "DESC"}
     mock.ExpectQuery("SELECT (.+) FROM LS").
-        WithArgs(ls.Id).
+        WithArgs(ls.ID).
         WillReturnRows(sqlmock.NewRows(columns).AddRow("664b5f3c4b1cb0a62e1528dcf6c88edb", "test", "This is test"))
 
     conn := &LsRepository{db: db}
@@ -63,7 +63,7 @@ func TestUpdate(t *testing.T) {
 
     mock.ExpectPrepare(regexp.QuoteMeta("UPDATE LS SET DESC")).
         ExpectExec().
-        WithArgs(ls.Desc, ls.Id, ls.Name).
+        WithArgs(ls.Desc, ls.ID, ls.Name).
         WillReturnResult(sqlmock.NewResult(1, 1))
 
     conn := &LsRepository{db: db}
@@ -83,7 +83,7 @@ func TestDel(t *testing.T) {
 
     mock.ExpectPrepare(regexp.QuoteMeta("DELETE FROM LS WHERE")).
         ExpectExec().
-        WithArgs(ls.Id, ls.Name).
+        WithArgs(ls.ID, ls.Name).
         WillReturnResult(sqlmock.NewResult(1, 1))
 
     conn := &LsRepository{db: db}
