@@ -1,6 +1,8 @@
 # ls pro
 
 [![Build Status](https://travis-ci.com/Birjemin/ls-pro.svg?branch=master)](http://travis-ci.org/mrb/hob)
+
+[![Go Report Card](https://goreportcard.com/badge/github.com/birjemin/ls-pro)](https://goreportcard.com/report/github.com/birjemin/ls-pro)
 ## 动机
 
 - 手上有太多的项目，有时候也会clone很多项目来看，但是时间久了，有时候根本不知道每一个文件是啥项目
