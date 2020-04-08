@@ -13,6 +13,7 @@ var (
     d string
 )
 
+// init
 func init() {
     flag.BoolVar(&h, "h", false, `Desc: help document
 `)
@@ -34,6 +35,7 @@ Options:
     flag.PrintDefaults()
 }
 
+// main
 func main() {
 
     flag.Parse()

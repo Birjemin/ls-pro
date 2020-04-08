@@ -8,12 +8,14 @@ import (
     "os"
 )
 
+// Ls table
 type Ls struct {
-    Id   string
+    ID   string
     Name string
     Desc string
 }
 
+// CreateConnection create db connection
 func CreateConnection(filepath string) (*sql.DB, error) {
     // check db
     if !Exist(filepath) {
@@ -36,6 +38,7 @@ func CreateConnection(filepath string) (*sql.DB, error) {
     return db, nil
 }
 
+// create database
 func createDb(filepath string) error {
     file, err := os.Create(filepath) // Create SQLite file
     if err != nil {
@@ -45,6 +48,7 @@ func createDb(filepath string) error {
     return nil
 }
 
+// create table
 func createTb(db *sql.DB) error {
     stmt, err := db.Prepare(`CREATE TABLE IF NOT EXISTS ls(ID CHAR(30),NAME TEXT,DESC TEXT);CREATE INDEX IF NOT EXISTS idx ON ls(ID,NAME);`)
     if err != nil {

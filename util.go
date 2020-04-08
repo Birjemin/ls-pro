@@ -16,6 +16,7 @@ var (
     colorPurple = "\033[35m"
 )
 
+// GetCurrentDirectory get current directory
 func GetCurrentDirectory() string {
     dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
     if err != nil {
@@ -24,6 +25,7 @@ func GetCurrentDirectory() string {
     return strings.Replace(dir, "\\", "/", -1)
 }
 
+// ListDir list directories
 func ListDir(dirPth string) ([]string, error) {
     var files []string
 
@@ -41,6 +43,7 @@ func ListDir(dirPth string) ([]string, error) {
     return files, nil
 }
 
+// Exist check it is exist
 func Exist(name string) bool {
     if _, err := os.Stat(name); err != nil {
         if os.IsNotExist(err) {
@@ -50,6 +53,7 @@ func Exist(name string) bool {
     return true
 }
 
+// HomeDir user's home directory
 func HomeDir() string {
     usr, err := user.Current()
     if err != nil {

@@ -6,18 +6,14 @@ import (
     "sync"
 )
 
-type IService interface {
-    GetAll()
-    Insert(params []string)
-    Del(params []string)
-}
-
+// service struct
 type service struct {
     id      string
     currDir string
     repo    *LsRepository
 }
 
+// insert or update
 func (srv *service) Insert(params []string) {
     if len(params) != 4 {
         _, _ = fmt.Fprintf(os.Stderr, `invalid params
@@ -27,7 +23,7 @@ Usage: ls-pro -i direction description
     }
 
     err := srv.repo.Insert(Ls{
-        Id:   srv.id,
+        ID:   srv.id,
         Name: params[2],
         Desc: params[3],
     })
@@ -43,6 +39,7 @@ Usage: ls-pro -i direction description
 `)
 }
 
+// del
 func (srv *service) Del(params []string) {
     if len(params) != 3 {
         _, _ = fmt.Fprintf(os.Stderr, `invalid params
@@ -52,7 +49,7 @@ Usage: ls-pro -d direction
     }
 
     err := srv.repo.Del(Ls{
-        Id:   srv.id,
+        ID:   srv.id,
         Name: params[2],
     })
 
@@ -67,6 +64,7 @@ Usage: ls-pro -d direction
 `)
 }
 
+// get all info
 func (srv *service) GetAll() {
 
     var wg sync.WaitGroup
@@ -108,8 +106,9 @@ func (srv *service) GetAll() {
 
 }
 
+// get kv list
 func (srv *service) kvList() map[string]string {
-    lss, err := srv.repo.GetAll(Ls{Id: srv.id})
+    lss, err := srv.repo.GetAll(Ls{ID: srv.id})
     if err != nil {
         return map[string]string{}
     }

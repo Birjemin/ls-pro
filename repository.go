@@ -5,20 +5,15 @@ import (
     _ "github.com/mattn/go-sqlite3"
 )
 
-type IRepository interface {
-    GetAll(ls Ls) ([]Ls, error)
-    Insert(ls Ls) error
-    Update(ls Ls) error
-    Del(ls Ls) error
-}
-
+// LsRepository ls repository
 type LsRepository struct {
     db *sql.DB
 }
 
+// GetAll get all
 func (l *LsRepository) GetAll(ls Ls) ([]Ls, error) {
-    lsSql := "SELECT * FROM LS WHERE ID ='?'"
-    rows, err := l.db.Query(lsSql, ls.Id)
+    lsSQL := "SELECT * FROM LS WHERE ID ='?'"
+    rows, err := l.db.Query(lsSQL, ls.ID)
     if err != nil {
         return nil, err
     }
@@ -26,24 +21,28 @@ func (l *LsRepository) GetAll(ls Ls) ([]Ls, error) {
     var lss []Ls
     for rows.Next() {
         ls := Ls{}
-        _ = rows.Scan(&ls.Id, &ls.Name, &ls.Desc)
+        _ = rows.Scan(&ls.ID, &ls.Name, &ls.Desc)
         lss = append(lss, ls)
     }
     return lss, nil
 }
 
+// Insert insert or update
 func (l *LsRepository) Insert(ls Ls) error {
-    return l.call(`INSERT OR REPLACE INTO LS(ID,NAME,DESC) VALUES(?,?,?)`, ls.Id, ls.Name, ls.Desc)
+    return l.call(`INSERT OR REPLACE INTO LS(ID,NAME,DESC) VALUES(?,?,?)`, ls.ID, ls.Name, ls.Desc)
 }
 
+// Update update
 func (l *LsRepository) Update(ls Ls) error {
-    return l.call(`UPDATE LS SET DESC=? WHERE ID=? AND NAME=?`, ls.Desc, ls.Id, ls.Name)
+    return l.call(`UPDATE LS SET DESC=? WHERE ID=? AND NAME=?`, ls.Desc, ls.ID, ls.Name)
 }
 
+// Del del
 func (l *LsRepository) Del(ls Ls) error {
-    return l.call(`DELETE FROM LS WHERE ID=? AND NAME=?`, ls.Id, ls.Name)
+    return l.call(`DELETE FROM LS WHERE ID=? AND NAME=?`, ls.ID, ls.Name)
 }
 
+// call function
 func (l *LsRepository) call(sql string, str ...interface{}) error {
     stmt, err := l.db.Prepare(sql)
     if err != nil {
