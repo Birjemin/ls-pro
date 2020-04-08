@@ -1,5 +1,7 @@
 # ls pro
 
+[![Build Status](https://travis-ci.com/Birjemin/ls-pro.svg?branch=master)](http://travis-ci.org/mrb/hob) [![Go Report Card](https://goreportcard.com/badge/github.com/birjemin/ls-pro)](https://goreportcard.com/report/github.com/birjemin/ls-pro) [![codecov](https://codecov.io/gh/Birjemin/ls-pro/branch/master/graph/badge.svg)](https://codecov.io/gh/Birjemin/ls-pro)
+
 ## 动机
 
 - 手上有太多的项目，有时候也会clone很多项目来看，但是时间久了，有时候根本不知道每一个文件是啥项目
@@ -38,6 +40,12 @@ ls-pro 默认展示
 ls-pro -i ahh zhang 给目录添加备注
 ls-pro -d ahh 给目录删除备注
 ls-pro -h 帮助文档
+```
+
+## 代码格式化
+```
+golint
+go fmt ./
 ```
 
 ## 备注
