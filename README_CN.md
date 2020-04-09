@@ -48,6 +48,12 @@ golint
 go fmt ./
 ```
 
+## 代码测试覆盖率
+```
+go test -coverprofile cover.out
+go tool cover -html=cover.out
+```
+
 ## 备注
 
 - 如何加入到系统命令中？？
